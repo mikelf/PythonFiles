@@ -12,8 +12,8 @@ else:
                  print (fi)
                  print (extensions)
  		 if fi.endswith(extensions):
-            print("extracting: "+ fi)
-            os.system("7za e \"" + os.path.join(root, fi)+"\"")
-            #os.system("7za e \"" + os.path.join(root, fi)+"\" -o \""+root+"\"")
+                       print("extracting: "+ fi)
+                       os.system("7za e \"" + os.path.join(root, fi)+"\"")
+                       #os.system("7za e \"" + os.path.join(root, fi)+"\" -o \""+root+"\"")
 
 
