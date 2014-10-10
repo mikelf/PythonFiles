@@ -4,14 +4,22 @@ import json
 import os
 
 
-lissuscriptions = []
+listsuscriptions = []
 def loadsuscrp():
-	global lissuscriptions
+	global listsuscriptions
 	json_data=open('suscript.json')
-	lissuscriptions = json.load(json_data)
+	listsuscriptions = json.load(json_data)
+
+def savenovedades():
+    global listsuscriptions
+    f = open("suscript.json","w")
+    simplejson = json
+    simplejson.dump(listsuscriptions,f)
+    f.close()
+
 
 loadsuscrp()
-urls = lissuscriptions['urls']
+urls = listsuscriptions['urls']
 for suscript in urls:
     page = requests.get(suscript['value'])
     tree = html.fromstring(page.text)
@@ -21,5 +29,17 @@ for suscript in urls:
         if item.text != None:
             if suscript['data']  in item.text_content():
 	        last_cap = item.text_content()
-    print('The last cap. of ' + suscript['id'] + ' is ' + last_cap)
-
+    last = suscript['last']
+    if last != last_cap:
+	suscript['last']= last_cap
+        suscript['new']= '1'
+    else:
+        suscript['new']= '0'
+    print('The last cap. of ' + suscript['id'] + ' is : ________________________________________' + last_cap)
+print('*****************************************************')
+print('******************* NEW CONTENT *********************')
+print('*****************************************************')
+for suscript in urls:
+    if suscript['new'] == '1':
+        print(suscript['id']+' - '+suscript['last'])
+savenovedades()
